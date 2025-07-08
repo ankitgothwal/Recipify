@@ -1,6 +1,8 @@
 import React from "react"
 import IngredientsList from "./IngredientsList"
 import CloudeRecipe from "./CloudeRecipe"
+import {getRecipeFromMistral} from "../ai"
+
 export default function Main(){
     const [ingredients, setIngredients] = React.useState([])
 
@@ -12,10 +14,11 @@ export default function Main(){
         const newIngredient = formData.get("ingredient")
         setIngredients(prevIngredients => [...prevIngredients, newIngredient])
     }
-    const [recipeShown, setRecipeShown] = React.useState(false)
+    const [recipe, setRecipe] = React.useState("")
 
-    function toggleRecipeShown() {
-        setRecipeShown(prevShown => !prevShown)
+    async function getRecipe() {
+        const recipeMarkdown = await getRecipeFromMistral(ingredients)
+        setRecipe(recipeMarkdown)
     }
     return(
         <main>
@@ -30,10 +33,10 @@ export default function Main(){
             </form>
             {ingredients.length > 0 && 
             <IngredientsList ingredients={ingredients}
-            toggleRecipeShown={toggleRecipeShown}
+            toggleRecipeShown={getRecipe}
             ingredientsListItems={ingredientsListItems}
                 />}
-            {recipeShown && <CloudeRecipe />}
+            {getRecipe && <CloudeRecipe recipe={recipe} />}
         </main>
     )
 }

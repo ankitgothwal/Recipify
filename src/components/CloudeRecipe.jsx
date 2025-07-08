@@ -1,5 +1,6 @@
-export default function CloudeRecipe(){
+export default function CloudeRecipe(props){
     return(
-        <p>Recipe is here!</p>
+        <section>{props.recipe}</section>
+        
     )
 }
