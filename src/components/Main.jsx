@@ -1,4 +1,6 @@
 import React from "react"
+import IngredientsList from "./IngredientsList"
+import CloudeRecipe from "./CloudeRecipe"
 export default function Main(){
     const [ingredients, setIngredients] = React.useState([])
 
@@ -9,6 +11,11 @@ export default function Main(){
     function addIngredient(formData) {
         const newIngredient = formData.get("ingredient")
         setIngredients(prevIngredients => [...prevIngredients, newIngredient])
+    }
+    const [recipeShown, setRecipeShown] = React.useState(false)
+
+    function toggleRecipeShown() {
+        setRecipeShown(prevShown => !prevShown)
     }
     return(
         <main>
@@ -21,17 +28,12 @@ export default function Main(){
                 />
                 <button>Add ingredient</button>
             </form>
-            {ingredients.length > 0 ? <section>
-                <h2>Ingredients on hand:</h2>
-                <ul className="ingredients-list" aria-live="polite">{ingredientsListItems}</ul>
-                <div className="get-recipe-container">
-                    <div>
-                        <h3>Ready for a recipe?</h3>
-                        <p>Generate a recipe from your list of ingredients.</p>
-                    </div>
-                    <button>Get a recipe</button>
-                </div>
-            </section> : null}
+            {ingredients.length > 0 && 
+            <IngredientsList ingredients={ingredients}
+            toggleRecipeShown={toggleRecipeShown}
+            ingredientsListItems={ingredientsListItems}
+                />}
+            {recipeShown && <CloudeRecipe />}
         </main>
     )
 }
