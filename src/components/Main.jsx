@@ -33,10 +33,10 @@ export default function Main(){
             </form>
             {ingredients.length > 0 && 
             <IngredientsList ingredients={ingredients}
-            toggleRecipeShown={getRecipe}
+            getRecipe={getRecipe}
             ingredientsListItems={ingredientsListItems}
                 />}
-            {getRecipe && <CloudeRecipe recipe={recipe} />}
+            {recipe && <CloudeRecipe recipe={recipe} />}
         </main>
     )
 }
