@@ -1,3 +1,4 @@
+import React from "react"
 import chefImage from '../assets/Chef Claude Icon.png'
 export default function Header(){
     return(
